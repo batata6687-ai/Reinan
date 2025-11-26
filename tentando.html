@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Projeto Especial</title>
+
+<style>
+/* -------------------- ESTILO GERAL -------------------- */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: black;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Telas */
+.tela {
+  display: none;
+  padding: 30px;
+  text-align: center;
+}
+
+.mostrar {
+  display: block;
+}
+
+/* Botões gerais */
+.btn {
+  display: block;
+  padding: 12px;
+  margin: 10px auto;
+  width: 90%;
+  max-width: 300px;
+  border-radius: 25px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: .3s;
+  backdrop-filter: blur(5px);
+}
+.btn:hover {
+  background: rgba(255,255,255,0.25);
+  transform: scale(1.07);
+}
+
+/* Estrelas */
+.star {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  animation: blink 2s infinite ease-in-out;
+  opacity: 0.7;
+  box-shadow: 0 0 10px white;
+  z-index: -1;
+}
+
+@keyframes blink {
+  0% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.7); }
+  100% { opacity: 0.2; transform: scale(1); }
+}
+
+/* -------------------- MÚSICAS -------------------- */
+.musicaCard {
+  width: 90%;
+  max-width: 350px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 18px;
+  border: 2px solid #000000;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.tituloMusica {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.textoMusica {
+  background: rgba(255,255,255,0.12);
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #000000;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* -------------------- FOTOS -------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.fotoCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: .3s;
+}
+.grid img:hover {
+  transform: scale(1.05);
+}
+
+/* Texto fixo nas fotos */
+.textoFixo {
+  width: 90%;
+  margin-top: 10px;
+  padding: 12px;
+  background: rgba(255,255,255,0.12);
+  border: 2px solid #000000;
+  border-radius: 12px;
+  color: white;
+  font-size: 15px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255,255,255,0.25);
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  z-index: 2000;
+}
+.lightbox img {
+  width: 80%;
+  max-width: 500px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px white;
+}
+
+/* -------------------- DECLARAÇÃO -------------------- */
+.credits {
+  position: absolute;
+  bottom: -100%;
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
+  line-height: 1.8;
+  animation: subir 45s linear forwards;
+}
+@keyframes subir {
+  from { bottom: -100%; }
+  to { bottom: 100%; }
+}
+
+/* -------------------- SENHA BONITA -------------------- */
+
+.senhaBox {
+  width: 350px;
+  padding: 25px;
+  background: rgba(255, 77, 136, 0.12);
+  border: 2px solid #000000;
+  border-radius: 20px;
+  margin: 80px auto 20px auto;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  animation: aparecer 0.6s ease;
+}
+
+.tituloSenha {
+  color: #fff;
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.subSenha {
+  color: #fce4ec;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.inputSenha {
+  width: 90%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  outline: none;
+  text-align: center;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.inputSenha:focus {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 10px #000000;
+}
+
+.btnSenha {
+  margin-top: 20px;
+  width: 90%;
+  padding: 12px;
+  background: #000000;
+  color: white;
+  font-size: 17px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(255, 77, 136, 0.4);
+}
+
+.btnSenha:hover {
+  background: #ff2a6d;
+  box-shadow: 0 0 15px rgba(255, 77, 136, 0.8);
+  transform: scale(1.05);
+}
+
+.erroSenha {
+  margin-top: 15px;
+  color: #ff8080;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.btnVoltar {
+  margin-top: 10px;
+  background: transparent;
+  border: 1px solid #ff4d88;
+  padding: 8px 16px;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btnVoltar:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+</style>
+</head>
+
+<body>
+
+<script>
+for (let i = 0; i < 120; i++) {
+  let s = document.createElement("div");
+  s.classList.add("star");
+  s.style.left = Math.random()*100+"vw";
+  s.style.top = Math.random()*100+"vh";
+  s.style.animationDuration = 1+Math.random()*3+"s";
+  document.body.appendChild(s);
+}
+</script>
+
+<!-- ========================= TELA INICIAL ========================= -->
+<div id="inicio" class="tela mostrar">
+  <h1>💌  Quero pedir desculpas (deu trabalho viu kkk)  💌</h1>
+  <p>Bom creio que isso não muda ou não vai mudar as coisas que já aconteceu</p>
+  <p>e que também não vai mudar o fato de sua mãe estar com raiva de mim</p>
+  <p>Mas igual eu falei pra você eu ia tentar mudar e fazer de tudo </p>
+  <p>então acho que não custa tentar né kkk, eu já estava pensando em fazer isso</p>
+  <p>mas eu não tinha tempo agora que eu sou vagabundo tenho tempo pra fazer</p>
+  <p>então aqui tem um pouco de nossos momentos músicas que foram importantes pra mim kkk. ❤️</p>
+
+  <button class="btn" onclick="mostrar('fotos')">📸 Ver fotos</button>
+  <button class="btn" onclick="mostrar('musicas')">🎵 Ver músicas</button>
+  <button class="btn" onclick="mostrar('senha')">🔐 Surpresa</button>
+</div>
+
+<!-- ========================= FOTOS ========================= -->
+<div id="fotos" class="tela">
+  <h1>📸 Fotos e significados</h1>
+
+  <div class="grid">
+
+      <div class="fotoCard">
+        <img src="sexto.png.jpg" onclick="abrirFoto('sexto.png.jpg')">
+        <div class="textoFixo">Bom escolhi essa foto pq foi um dos momentos mais divertidos que nos tivemos, com videos brinadeiras um momento de varios que tivemos ❤️</div>
+      </div>
+
+      <div class="fotoCard">
+        <img src="feliz.png.jpg" onclick="abrirFoto('feliz.png.jpg')">
+        <div class="textoFixo">Escolhi essa mais pq é a unica que ficou boa kkk e tambem usei e postei achei ela importante tambem ❤️</div>
+      </div>
+
+      <div class="fotoCard">
+        <img src="quarto.png.jpg" onclick="abrirFoto('quarto.png.jpg')">
+        <div class="textoFixo">Escolhi essa pq acho que foi a ultima vez que saimos juntos, tinha acontecido algo que me deixou muito abalado e você estava cmg ❤️</div>
+      </div>
+
+      <div class="fotoCard">
+        <img src="primeiro.png.jpg" onclick="abrirFoto('primeiro.png.jpg')">
+        <div class="textoFixo">E essa é bem estranha mas tem um significado foi a primeira vez que nos saimos (não foi dos melhores dates que nos ja tivemos mas tem um significado kkk)</div>
+      </div>
+
+  </div>
+
+  <button class="btn" onclick="mostrar('inicio')">⬅ Voltar</button>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="fecharFoto()">
+  <img id="fotoFull">
+</div>
+
+<!-- ========================= MÚSICAS ========================= -->
+<div id="musicas" class="tela">
+  <h1>🎵 Músicas escolhidas 🎵</h1>
+
+  <div class="musicaCard">
+    <div class="tituloMusica">❤️ Música 1</div>
+    <button class="btn" onclick="tocar('2025-11-25.mp3')">Tocar</button>
+    <div class="textoMusica">Acho que essa musica é a mais importante claro um dia muito marcante e muito importante um dos dias que eu fiquei muito nervoso tambem kkk.💗</div>
+  </div>
+
+  <div class="musicaCard">
+    <div class="tituloMusica">❤️ Música 2</div>
+    <button class="btn" onclick="tocar('25.mp3')">Tocar</button>
+    <div class="textoMusica">Essa foi uma de algumas que eu ja te declarei e te mandei esses dias ✨</div>
+  </div>
+
+  <div class="musicaCard">
+    <div class="tituloMusica">❤️ Música 3</div>
+    <button class="btn" onclick="tocar('22.mp3')">Tocar</button>
+    <div class="textoMusica">E essa é outra que eu tambem ja te dediquei.❤️</div>
+  </div>
+
+  <button class="btn" onclick="mostrar('inicio')">⬅ Voltar</button>
+
+  <audio id="player"></audio>
+</div>
+
+<!-- ========================= SENHA BONITA ========================= -->
+<div id="senha" class="tela">
+
+  <div class="senhaBox">
+
+    <h1 class="tituloSenha">🔐 Área protegida</h1>
+    <p class="subSenha">Digite a senha para entrar, dica uma data importante </p>
+    <p>Ex:00/00/000</p>
+
+    <input type="password" id="campoSenha" placeholder="Digite a senha..." class="inputSenha">
+    
+    <button class="btnSenha" onclick="verificar()">Entrar</button>
+
+    <p id="erro" class="erroSenha"></p>
+
+  </div>
+
+  <button class="btnVoltar" onclick="mostrar('inicio')">⬅ Voltar</button>
+
+</div>
+
+<!-- ========================= DECLARAÇÃO ========================= -->
+<div id="declaracao" class="tela">
+  <div class="credits">
+    <br><br>
+    💖 <b>Carta aberta pra você</b> 💖 <br><br>
+
+    Você é a minha princesa e sempre vai ser... <br>
+    Mesmo que nós não esteja mais juntos... <br>
+    Você sempre teve e vai continuar tendo um lugar especial no meu coração... <br>
+    Peço desculpas por tudo que aconteceu, fui muito imaturo... <br><br>
+
+    Cada momento que eu tive com você foi único e especial. <br>
+    Nunca foi só sobre palavras, mas sobre sentir… <br>
+    Sobre como meu coração ficava leve quando passava o tempo com você. <br><br>
+
+    Você era meu ponto de paz, minha maior certeza. <br>
+    Eu errei muito mas eu tentei me esforcei pra ser melhor. <br>
+    Mas infelizmente eu vacilei com voçê e faltei com respeito <br>
+    E novamente peço desculpas por tudo que eu fiz e deixei de fazer. ❤️ <br><br>
+
+    <br><br>
+    — Eu te amo mesmo sabendo que possivelmente eu não te tenha mais.  
+  </div>
+
+  <audio id="musicaDeclaracao" autoplay loop src="12.mp3"></audio>
+</div>
+
+<!-- ========================= JAVASCRIPT ========================= -->
+<script>
+
+let player = document.getElementById("player");
+let musicaDec = document.getElementById("musicaDeclaracao");
+
+/* ---------------- NAVEGAÇÃO ENTRE TELAS ---------------- */
+function mostrar(tela) {
+
+  // Para TODAS as músicas ao trocar de tela
+  player.pause();
+  player.currentTime = 0;
+
+  musicaDec.pause();
+  musicaDec.currentTime = 0;
+
+  document.querySelectorAll(".tela").forEach(t => t.classList.remove("mostrar"));
+  document.getElementById(tela).classList.add("mostrar");
+
+  // 👉 Toca música automaticamente nas FOTOS
+  if (tela === "fotos") {
+    player.src = "12.mp3";
+    player.loop = true;
+    player.play();
+  }
+
+  // 👉 Toca música automaticamente na DECLARAÇÃO
+  if (tela === "declaracao") {
+    musicaDec.src = "12.mp3";
+    musicaDec.loop = true;
+    musicaDec.play();
+  }
+}
+
+function tocar(arquivo) {
+  musicaDec.pause();
+  musicaDec.currentTime = 0;
+
+  player.src = arquivo;
+  player.play();
+}
+
+function abrirFoto(src) {
+  player.pause();
+  musicaDec.pause();
+  
+  document.getElementById("fotoFull").src = src;
+  document.getElementById("lightbox").style.display = "flex";
+}
+function fecharFoto() {
+  document.getElementById("lightbox").style.display = "none";
+}
+
+function verificar() {
+  let senha = document.getElementById("campoSenha").value;
+  let erro = document.getElementById("erro");
+
+  if (senha === "12/04/2025") {
+    mostrar("declaracao");
+  } else {
+    erro.textContent = "❌ Senha incorreta";
+  }
+}
+</script>
+
+</body>
+</html>
